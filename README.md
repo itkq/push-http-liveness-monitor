@@ -36,8 +36,9 @@ Send a heartbeat:
 
 ```
 curl -X POST \
+  -H "content-type: application/json" \
   -H "x-api-key: <api-key>" \
-  -d '{"status":"ok"}' \
+  -d '{}' \
   $endpoint
 ```
 
