@@ -129,6 +129,9 @@ resource "aws_api_gateway_method_response" "heartbeat_200" {
   response_models = {
     "application/json" = "Empty"
   }
+  response_parameters = {
+    "method.response.header.Content-Type" = true
+  }
 }
 
 resource "aws_api_gateway_integration_response" "heartbeat_200" {
@@ -144,6 +147,9 @@ resource "aws_api_gateway_integration_response" "heartbeat_200" {
         "status": "ok"
       }
     EOF
+  }
+  response_parameters = {
+    "method.response.header.Content-Type" = "'application/json'"
   }
 
   depends_on = [aws_api_gateway_integration.heartbeat_post]
