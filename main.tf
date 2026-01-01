@@ -9,6 +9,7 @@ locals {
     integrations_params    = { for k, i in aws_api_gateway_integration.heartbeat_post : k => i.request_parameters }
     method_responses       = { for k, r in aws_api_gateway_method_response.heartbeat_200 : k => r.status_code }
     integration_responses  = { for k, r in aws_api_gateway_integration_response.heartbeat_200 : k => r.status_code }
+    integration_templates  = { for k, r in aws_api_gateway_integration_response.heartbeat_200 : k => r.response_templates }
   }))
 }
 
@@ -128,6 +129,7 @@ resource "aws_api_gateway_method_response" "heartbeat_200" {
   status_code = "200"
   response_models = {
     "application/json" = "Empty"
+    "application/xml"  = "Empty"
   }
   response_parameters = {
     "method.response.header.Content-Type" = true
@@ -143,6 +145,11 @@ resource "aws_api_gateway_integration_response" "heartbeat_200" {
   status_code = aws_api_gateway_method_response.heartbeat_200[each.key].status_code
   response_templates = {
     "application/json" = <<-EOF
+      {
+        "status": "ok"
+      }
+    EOF
+    "application/xml" = <<-EOF
       {
         "status": "ok"
       }
