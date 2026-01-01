@@ -18,7 +18,7 @@ resource "aws_sns_topic" "push_http_liveness_monitor_topic" {
   name = "push-http-liveness-monitor"
 }
 module "push_http_liveness_monitor" {
-  source = "github.com/itkq/push-http-liveness-monitor?ref=v0.1.1"
+  source = "github.com/itkq/push-http-liveness-monitor?ref=v0.1.2"
   targets = [
     "device-1",
   ]
